@@ -36,6 +36,19 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-prettier": "7.1.0"
+    "eslint-config-prettier": "7.1.0",
+    "husky": "4.3.7",
+    "lint-staged": "10.0.0-1"
+  },
+  "husky": {
+    "hooks": {
+        "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix-dry-run"
+    ]
   }
 }

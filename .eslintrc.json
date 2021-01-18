@@ -20,18 +20,24 @@
   },
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "comma-dangle": ["error", "never"],
     "import/no-unresolved": "off",
     "no-use-before-define": "off",
     "import/extensions": "off",
     "import/no-absolute-path": "off",
     "object-curly-newline": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "no-case-declarations": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "react/jsx-one-expression-per-line": "off"
   },
   "globals": {
     "shallow": true,

@@ -27,6 +27,32 @@
     <title>React App</title>
   </head>
   <body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-database.js"></script>
+
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyCRZthI7CreaJbdx-NzxFIHMP8zj0Y7MBI",
+        authDomain: "realpass-a7db8.firebaseapp.com",
+        databaseURL: "https://realpass-a7db8-default-rtdb.firebaseio.com",
+        projectId: "realpass-a7db8",
+        storageBucket: "realpass-a7db8.appspot.com",
+        messagingSenderId: "543138816699",
+        appId: "1:543138816699:web:a6ff92f849c62ead987f9e",
+        measurementId: "G-JQHZC2YD5N"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

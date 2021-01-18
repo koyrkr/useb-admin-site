@@ -9,9 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CommonInput, CommonButton } from '../styles';
 import { sendNotification } from '../modules/notification';
 import {
-  // getStoreTokenKey,
+  getStoreTokenKey,
   getAllTokenKey,
-  getStoreList
+  getStoreList,
+  createTokenKey
 } from '../modules/store';
 
 const MainWrapper = styled.div`
@@ -74,9 +75,14 @@ const SendNotificationPage = () => {
       // console.log(selectedTokenKey);
       sendNotification(selectedTokenKey, notiInfo);
     } else {
-      // dispatch(getStoreTokenKey(storeName));
-      // console.log(selectedTokenKey);
-      // sendNotification(selectedTokenKey, notiInfo);
+      dispatch(
+        createTokenKey(
+          'abcd',
+          'fJp7byCjQdyD9VE7cSKMCx:APA91bGliXs52hGLGIbkwianlNcWTuUbhIEEmfBaSAAYIt6iSImq2BCh3EpA-ts-NEuzCO003MOy8AKkmYMrGjOsHixwxtlj2npSBrVaHdvqoFW-Nanrgu0eg_VHSM9r4j7iZzP57TvQ'
+        )
+      );
+      dispatch(getStoreTokenKey(storeName));
+      console.log(selectedTokenKey);
       dispatch(
         sendNotification(
           'fJp7byCjQdyD9VE7cSKMCx:APA91bGliXs52hGLGIbkwianlNcWTuUbhIEEmfBaSAAYIt6iSImq2BCh3EpA-ts-NEuzCO003MOy8AKkmYMrGjOsHixwxtlj2npSBrVaHdvqoFW-Nanrgu0eg_VHSM9r4j7iZzP57TvQ',

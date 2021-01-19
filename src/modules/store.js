@@ -185,7 +185,6 @@ export const getAllTokenKey = () => async (dispatch) => {
   try {
     result = await axios.get(
       'https://fcm.googleapis.com/fcm/notification?notification_key_name=All',
-      {},
       {
         headers: {
           // eslint-disable-next-line prettier/prettier

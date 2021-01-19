@@ -1,9 +1,16 @@
 import axios from 'axios';
-import { FCMServerKey } from '../firebase.config';
+import { FCMServerKey, BearerAuthToken } from '../firebase.config';
 
 export const SEND_NOTI_REQUEST = 'notification/SEND_NOTI_REQUEST';
 export const SEND_NOTI_SUCCESS = 'notification/SEND_NOTI_SUCCESS';
 export const SEND_NOTI_FAILURE = 'notification/SEND_NOTI_FAILURE';
+
+export const SEND_NOTI_WITH_IMAGE_REQUEST =
+  'notification/SEND_NOTI_WITH_IMAGE_REQUEST';
+export const SEND_NOTI_WITH_IMAGE_SUCCESS =
+  'notification/SEND_NOTI_WITH_IMAGE_SUCCESS';
+export const SEND_NOTI_WITH_IMAGE_FAILURE =
+  'notification/SEND_NOTI_WITH_IMAGE_FAILURE';
 
 const initialState = {};
 
@@ -49,6 +56,49 @@ export const sendNotification = (storeTokenKey, notiInfo) => async (
   }
   dispatch({
     type: 'notification/SEND_NOTI_SUCCESS',
+    result: result?.data.results
+  });
+};
+
+export const sendNotificationWithImage = (
+  storeTokenKey,
+  imageInfo,
+  notiInfo
+) => async (dispatch) => {
+  dispatch({ type: 'notification/SEND_NOTI_WITH_IMAGE_REQUEST' });
+  let result;
+  try {
+    result = await axios.post(
+      'https://fcm.googleapis.com/v1/projects/realpass-a7db8/messages:send',
+      {
+        message: {
+          token: storeTokenKey,
+          android: {
+            notification: {
+              body: notiInfo.message,
+              title: notiInfo.title,
+              image: imageInfo.imageUrl
+            }
+          }
+        }
+      },
+      {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          Authorization: `Bearer ${BearerAuthToken}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  } catch (error) {
+    dispatch({
+      type: 'notification/SEND_NOTI_WITH_IMAGE_FAILURE',
+      error
+    });
+    return;
+  }
+  dispatch({
+    type: 'notification/SEND_NOTI_WITH_IMAGE_SUCCESS',
     result: result?.data.results
   });
 };

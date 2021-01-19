@@ -7,12 +7,15 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { CommonInput, CommonButton } from '../styles';
-import { sendNotification } from '../modules/notification';
+import {
+  sendNotification,
+  sendNotificationWithImage
+} from '../modules/notification';
 import {
   getStoreTokenKey,
   getAllTokenKey,
-  getStoreList,
-  createTokenKey
+  getStoreList
+  // createTokenKey
 } from '../modules/store';
 
 const MainWrapper = styled.div`
@@ -47,6 +50,7 @@ const useStyles = makeStyles(() => ({
 
 const SendNotificationPage = () => {
   const classes = useStyles();
+  const [imageInfo, setImageInfo] = useState({ imageUrl: '' });
   const [notiInfo, setNotiInfo] = useState({ title: '', message: '' });
   const [storeName, setStoreName] = useState('');
   const selectedTokenKey = useSelector(
@@ -64,6 +68,11 @@ const SendNotificationPage = () => {
     setNotiInfo((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageUrlChange = (e) => {
+    const { name, value } = e.target;
+    setImageInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleStoreChange = (event, value) => {
     setStoreName(value);
   };
@@ -75,12 +84,12 @@ const SendNotificationPage = () => {
       // console.log(selectedTokenKey);
       sendNotification(selectedTokenKey, notiInfo);
     } else {
-      dispatch(
-        createTokenKey(
-          'abcd',
-          'fJp7byCjQdyD9VE7cSKMCx:APA91bGliXs52hGLGIbkwianlNcWTuUbhIEEmfBaSAAYIt6iSImq2BCh3EpA-ts-NEuzCO003MOy8AKkmYMrGjOsHixwxtlj2npSBrVaHdvqoFW-Nanrgu0eg_VHSM9r4j7iZzP57TvQ'
-        )
-      );
+      // dispatch(
+      //   createTokenKey(
+      //     'abcd',
+      //     'fJp7byCjQdyD9VE7cSKMCx:APA91bGliXs52hGLGIbkwianlNcWTuUbhIEEmfBaSAAYIt6iSImq2BCh3EpA-ts-NEuzCO003MOy8AKkmYMrGjOsHixwxtlj2npSBrVaHdvqoFW-Nanrgu0eg_VHSM9r4j7iZzP57TvQ'
+      //   )
+      // );
       dispatch(getStoreTokenKey(storeName));
       console.log(selectedTokenKey);
       dispatch(
@@ -91,6 +100,18 @@ const SendNotificationPage = () => {
       );
     }
     setNotiInfo({ title: '', message: '' });
+  };
+
+  const onClickSubmitWithImage = () => {
+    if (storeName === '전체') {
+      dispatch(
+        sendNotificationWithImage(selectedTokenKey, imageInfo, notiInfo)
+      );
+    } else {
+      dispatch(
+        sendNotificationWithImage(selectedTokenKey, imageInfo, notiInfo)
+      );
+    }
   };
 
   return (
@@ -137,6 +158,21 @@ const SendNotificationPage = () => {
         onClick={onClickSubmit}
       >
         Send
+      </CommonButton>
+      <CommonInput
+        id="image-url-input"
+        name="imageUrl"
+        value={imageInfo.imageUrl}
+        placeholder="Image Url (https://...jpg)"
+        onChange={handleImageUrlChange}
+      />
+      <CommonButton
+        id="submit-button"
+        disabled={notiInfo.title === '' || notiInfo.message === ''}
+        margin="20px 0"
+        onClick={onClickSubmitWithImage}
+      >
+        Send with Image
       </CommonButton>
     </MainWrapper>
   );
